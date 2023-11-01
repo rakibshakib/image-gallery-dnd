@@ -1,0 +1,53 @@
+.imageContainer,
+.imageContainerSelected {
+  width: 400px;
+  border: 1px solid gray;
+  position: relative;
+  cursor: pointer;
+}
+.imageContainer:before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.4);
+  transition: opacity 0.3s;
+  z-index: 1;
+  opacity: 0;
+}
+.imageContainerSelected:before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(199, 199, 199, 0.4);
+  transition: opacity 0.3s;
+  z-index: 1;
+  opacity: 1;
+}
+.imageContainer:hover:before {
+  opacity: 1;
+}
+.images {
+  display: block;
+  width: 100%;
+  height: auto;
+  transition: transform 0.3s, filter 0.3s;
+}
+
+.checkBox {
+  position: absolute;
+  top: 30px;
+  left: 60px;
+  z-index: 500;
+  cursor: pointer;
+  height: 25px;
+  width: 25px;
+}
+.checkBox:hover .imageContainer:before {
+  opacity: 1;
+}
