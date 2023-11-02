@@ -1,23 +1,45 @@
 import { useState } from "react";
-import { useDrag } from "react-dnd";
+import { useDrag, useDrop } from "react-dnd";
 
 import imageStyle from "./singleimage.module.css";
 
 // eslint-disable-next-line react/prop-types
-const SingleImage = ({ images, index }) => {
+const SingleImage = ({ images, index, handleDrop, handleDrag }) => {
+  // eslint-disable-next-line no-unused-vars
   const [isSelected, setIsSelected] = useState(false);
-  console.log(isSelected);
-  const [{ isDragging }, drag] = useDrag(() => ({
-    type: "images",
+
+  const [{ isDragging }, drag] = useDrag({
+    item: {
+      index: index,
+      label: `${index}`,
+      itemname:`${index}`,
+    },
+    type: "BOX",
     collect: (monitor) => ({
       isDragging: !!monitor.isDragging(),
     }),
-  }));
+  });
+
+  const [, drop] = useDrop({
+    accept: "BOX",
+    drop: (item) => {
+      console.log({item}, "drop")
+      handleDrop(item.index, index);
+    },
+    collect: (monitor) => ({
+      isOver: monitor.isOver(),
+      canDrop: monitor.canDrop()
+    })
+  });
+  console.log({ isDragging, index });
+  console.log({ drag });
   return (
     <div
-      ref={drag}
+      ref={(node) => drag(drop(node))}
+      onDragStart={() => handleDrag(index)}
       style={{
         opacity: isDragging ? 0.5 : 1,
+        cursor: isDragging ? "grabbing" : "pointer",
       }}
       className={
         isSelected
@@ -25,7 +47,7 @@ const SingleImage = ({ images, index }) => {
           : `${imageStyle.imageContainer} grid-item-${index + 1}`
       }
     >
-      <input
+      {/* <input
         className={imageStyle.checkBox}
         type="checkbox"
         name=""
@@ -36,10 +58,8 @@ const SingleImage = ({ images, index }) => {
         onChange={(e) => {
           setIsSelected(e.target.checked);
         }}
-      />
-      <figure>
-        <img className={imageStyle.images} src={images} alt={"images 1"} />
-      </figure>
+      /> */}
+      <img className={imageStyle.images} src={images} alt={"images 1"} />
     </div>
   );
 };
