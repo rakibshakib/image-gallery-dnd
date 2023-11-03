@@ -2,7 +2,7 @@ import SingleImage from "../singleImage/SingleImage";
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
 import { useStateContext } from "../../context/context";
-import addPhotoIcon from "../../assets/images/add-photo-icon.png"
+import AddImage from "./AddImage";
 
 const DaraggableImages = () => {
   const { imagesList } = useStateContext().state;
@@ -28,8 +28,7 @@ const DaraggableImages = () => {
                 : `grid-item-${imagesList?.length + 1} add-image`
             }
           >
-            {/* Add Images */}
-            <img src={addPhotoIcon} alt="" />
+            <AddImage />
           </div>
         </div>
       </div>

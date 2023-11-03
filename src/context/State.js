@@ -66,11 +66,6 @@ const imagesDataSet = [
     key: 11,
     isSelected: false,
   },
-  {
-    img: image9,
-    key: 12,
-    isSelected: false,
-  },
 ];
 
 export const initialState = {
