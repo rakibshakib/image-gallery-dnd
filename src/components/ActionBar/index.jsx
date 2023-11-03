@@ -6,21 +6,12 @@ const ActionBar = () => {
     state: { imagesList },
     dispatch,
   } = useStateContext();
-  console.log({ imagesList });
   const seletecImages = useMemo(() => {
     return imagesList?.filter((image) => image.isSelected)?.length;
   }, [imagesList]);
-  console.log({ seletecImages });
 
   return (
     <div className={style.action_bar_container}>
-      {/* {seletecImages === 0 ? (
-        <h4> Gallery </h4>
-      ) : seletecImages === 1 ? (
-        `${seletecImages} File Selected `
-      ) : (
-        `${seletecImages} Files Selected`
-      )} */}
       {seletecImages > 0 ? (
         <div className={style.title}>
           <input
