@@ -1,16 +1,16 @@
 import "./styles/main.css";
-import { DndProvider } from "react-dnd";
-import { HTML5Backend } from "react-dnd-html5-backend";
-import DaraggableImages from "./components/test";
+import StateProvider from "./context/Store";
+import DaraggableImages from "./components/GalleryLaout";
+import ActionBar from "./components/ActionBar";
 
 function App() {
   return (
-    <>
-      <DndProvider backend={HTML5Backend}>
+    <StateProvider>
+      <div className="container">
+        <ActionBar />
         <DaraggableImages />
-      </DndProvider>
-      {/* <SingleImage />{" "} */}
-    </>
+      </div>
+    </StateProvider>
   );
 }
 

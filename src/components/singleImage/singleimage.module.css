@@ -1,13 +1,14 @@
 .imageContainer,
 .imageContainerSelected {
-  /* position: absolute; */
+  position: relative;
   /* cursor: pointer; */
   display: flex;
   justify-content: center;
   align-items: center;
   margin: 0 0;
-  outline: 5px solid blue;
+  /* outline: 5px solid blue; */
 }
+
 /* 
 .imageContainer:before {
   content: "";
@@ -44,17 +45,34 @@
   width: 100%;
   height: 100%;
   transition: transform 0.3s, filter 0.3s;
-  border: 2px solid red;
+  border: 1px solid rgb(203, 203, 203);
+  border-radius: 8px;
 }
 
 .checkBox {
-  position: relative;
-  top: -100px;
-  left: 12px;
+  position: absolute;
+  top: 16px;
+  left: 10px;
   z-index: 500;
   cursor: pointer;
-  height: 25px;
-  width: 25px;
+  height: 20px;
+  width: 24px;
+  opacity: 0;
+}
+
+.imageContainer:hover .checkBox {
+  opacity: 1;
+}
+
+.CheckBoxSelected {
+  position: absolute;
+  top: 16px;
+  left: 10px;
+  z-index: 500;
+  cursor: pointer;
+  height: 20px;
+  width: 24px;
+  opacity: 1;
 }
 
 .checkBox:hover .imageContainer:before {

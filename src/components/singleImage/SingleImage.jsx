@@ -1,18 +1,14 @@
-import { useState } from "react";
 import { useDrag, useDrop } from "react-dnd";
-
 import imageStyle from "./singleimage.module.css";
+import { useStateContext } from "../../context/context";
 
-// eslint-disable-next-line react/prop-types
-const SingleImage = ({ images, index, handleDrop, handleDrag }) => {
-  // eslint-disable-next-line no-unused-vars
-  const [isSelected, setIsSelected] = useState(false);
-
+const SingleImage = ({ images, index, handleDrag }) => {
+  const { dispatch } = useStateContext();
   const [{ isDragging }, drag] = useDrag({
     item: {
       index: index,
       label: `${index}`,
-      itemname:`${index}`,
+      itemname: `${index}`,
     },
     type: "BOX",
     collect: (monitor) => ({
@@ -23,16 +19,21 @@ const SingleImage = ({ images, index, handleDrop, handleDrag }) => {
   const [, drop] = useDrop({
     accept: "BOX",
     drop: (item) => {
-      console.log({item}, "drop")
-      handleDrop(item.index, index);
+      if (item.index !== index) {
+        dispatch({
+          type: "DRAG_IMG",
+          payload: {
+            dragIndex: item.index,
+            dropIndex: index,
+          },
+        });
+      }
     },
     collect: (monitor) => ({
       isOver: monitor.isOver(),
-      canDrop: monitor.canDrop()
-    })
+      canDrop: monitor.canDrop(),
+    }),
   });
-  console.log({ isDragging, index });
-  console.log({ drag });
   return (
     <div
       ref={(node) => drag(drop(node))}
@@ -42,24 +43,30 @@ const SingleImage = ({ images, index, handleDrop, handleDrag }) => {
         cursor: isDragging ? "grabbing" : "pointer",
       }}
       className={
-        isSelected
+        images?.isSelected
           ? `${imageStyle.imageContainerSelected} grid-item-${index + 1}`
           : `${imageStyle.imageContainer} grid-item-${index + 1}`
       }
     >
-      {/* <input
-        className={imageStyle.checkBox}
+      <input
+        className={
+          !images?.isSelected ? imageStyle.checkBox : imageStyle.CheckBoxSelected
+        }
         type="checkbox"
-        name=""
-        id=""
-        onSelect={(e) => {
-          console.log(e);
-        }}
+        name="isSelected"
+        id="isSelected"
+        value={images?.isSelected}
         onChange={(e) => {
-          setIsSelected(e.target.checked);
+          dispatch({
+            type: "SELECT_IMG_TOGGLE",
+            payload: {
+              key: images?.key,
+              isSelected: e.target.checked,
+            },
+          });
         }}
-      /> */}
-      <img className={imageStyle.images} src={images} alt={"images 1"} />
+      />
+      <img className={imageStyle.images} src={images?.img} alt={"images 1"} />
     </div>
   );
 };
@@ -67,6 +74,17 @@ const SingleImage = ({ images, index, handleDrop, handleDrag }) => {
 export default SingleImage;
 
 /* 
+
+
+   // dispatch({
+        //   type: "DRAG_IMG",
+        //   payload: {
+        //     dragIndex: item.index,
+        //     dropIndex: index,
+        //   },
+        // });
+
+
       <input
         className={imageStyle.checkBox}
         type="checkbox"
