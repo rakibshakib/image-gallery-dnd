@@ -1,4 +1,3 @@
-import "./styles/main.css";
 import StateProvider from "./context/Store";
 import DaraggableImages from "./components/GalleryLaout";
 import ActionBar from "./components/ActionBar";

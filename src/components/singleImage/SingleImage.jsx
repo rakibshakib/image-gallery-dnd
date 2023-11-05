@@ -29,6 +29,7 @@ const SingleImage = ({ images, index, handleDrag }) => {
         });
       }
     },
+    
     collect: (monitor) => ({
       isOver: monitor.isOver(),
       canDrop: monitor.canDrop(),
